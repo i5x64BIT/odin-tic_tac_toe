@@ -1,22 +1,40 @@
-const game = function(){
+const boardElements = document.querySelectorAll('.board > div');
+
+const Board = (() => { //Respopnsible for drawing and tracking
     const proto = [ //Set the board with empty objects so comparing doesn't give a false positive
         [{},{},{}],
         [{},{},{}],
         [{},{},{}]
     ];
-    let board = proto.slice();
-    const boardElements = document.querySelectorAll('.board > div');
-    const controlButtons = document.querySelectorAll('.controls button')
-
-    const updateBoard = (boardElement,location, value) => {
+    let board;
+    
+    const reset = () => {
+        boardElements.forEach(b => b.innerText='');
+        board = JSON.parse(JSON.stringify(proto)); //Deep Clone, either use this or recursion
+    }
+    const get = () => board;
+    const update = (boardElement,location, value) => {
         coordinates = location.split('-');
         board[coordinates[0]][coordinates[1]] = value;
 
         if(value == 'x') boardElement.innerText = 'x';
             else boardElement.innerText = 'o'
     }
-    const getBoard = () => board;
-    const isGameOver = () => {
+
+    reset(); //Board first setup
+
+    return { get, update, reset };
+})();
+
+const Game = (() => {
+    const controlButtons = document.querySelectorAll('.controls button');
+    let lastLocation;
+    let currentSign;
+
+    const getLastLocation = () => lastLocation;
+    const getCurrentSign = () => currentSign;
+    const isOver = () => {
+        const board = Board.get();
         //In a row
         for(let i = 0; i < 3; i++){
             if(board[i][0] === board[i][1] && board[i][1] === board[i][2]) return true;
@@ -32,10 +50,8 @@ const game = function(){
         return false;
     }
     const restart = () => {
-        boardElements.forEach(b => b.innerText='');
-        board = proto.slice();
+        Board.reset();
     }
-
 
     //Get User Choice
     controlButtons.forEach(b => {
@@ -46,7 +62,7 @@ const game = function(){
         });
     })
 
-    //Get User Board Input
+    //Get User Board Input + Game logic upon Event
     boardElements.forEach((e) => {
         e.addEventListener('click', () => {
             const btnActive = document.querySelector(':checked + label');
@@ -54,18 +70,17 @@ const game = function(){
                 alert('Please Select a Sign First!');
                 return;
             }
-            const { location } = e.dataset;
-            const { choice } = btnActive.dataset
+            lastLocation = e.dataset.location;
+            currentSign = btnActive.dataset.choice;
 
-            updateBoard(e, location, choice);
+            Board.update(e, lastLocation, currentSign); //Update board on each input event
 
-            if(isGameOver()){
-                if(alert(`${choice} has Won!!!`));
+            if(isOver()){
+                if(alert(`${currentSign} has Won!!!`));
                 restart();
             }
         });
     });
 
-    return { getBoard, restart }
-}();
-
+    return { getLastLocation, getCurrentSign, restart };
+})();
