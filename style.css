@@ -1,0 +1,109 @@
+:root{
+    font-size: 18px;
+    line-height: 1.5rem;
+    
+    --font-color-black: black;
+    --font-color-white: white;
+    --color-primary: #ffdd00;
+    --color-secondary: #9a6b26;
+    
+}
+
+html, body, h1, div, p{
+    margin: 0;
+    padding: 0;
+}
+script, body > *:not(.page-container){
+    display: none;
+}
+a{
+    text-decoration: none;
+    color: var(--font-color-black);
+}
+button{
+    appearance: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Utility */
+.btn-secondary{
+    border: 1px solid var(--color-secondary);
+    border-radius: 5px;
+    padding: .5em 2em;
+    background-color: var(--color-secondary);
+    color: var(--font-color-white);
+    transition: 80ms;
+}
+
+.btn-primary{
+    border: 1px solid var(--color-primary);
+    border-radius: 5px;
+    padding: .5em 2em;
+    background-color: var(--color-primary);
+    color: var(--font-color-black);
+    transition: 80ms;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover{
+    background-color: transparent;
+    color: var(--font-color-black);
+}
+.selected{
+    background-color: darkred;
+    border-color: darkred;
+}
+
+/* Layout */
+.page-container{
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+.header h1{
+    background-color: var(--color-primary);
+    text-align: center;
+    padding-block: 1em;
+}
+h1, footer, button{
+    font-family: 'Courier New', Courier, monospace;
+}
+footer{
+    text-align: center;
+    padding-block: 3em;
+    background-color: var(--color-secondary);
+    color: var(--font-color-white);
+}
+footer a{
+    color: var(--font-color-white);
+}
+.content-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+.board{
+    min-width: 30%;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    border: 5px solid var(--color-secondary);
+}
+.board > div{
+    background-color: lightgray;
+    border: 1px solid var(--color-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(1.5rem, 3rem + 1vw, 5rem);
+}
+.controls > button{
+    font-size: calc(1rem + .6vw);
+    padding-inline: clamp(100px, 25vw, 150px);
+    padding-block: 1em;
+}
+
+
