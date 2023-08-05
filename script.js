@@ -68,10 +68,17 @@ const Game = (() => {
 
             Board.update(e, lastLocation, currentSign); //Update board on each input event
 
-            if(isOver()){
-                if(alert(`${currentSign} has Won!!!`));
-                restart();
-            }
+            setTimeout(() => {
+                if(isOver()){
+                    if(alert(`${currentSign} has Won!!!`));
+                    restart();
+                }            
+                else{
+                    //Switch Sign
+                    btnActive.removeAttribute('checked');
+                    btnInactive.setAttribute('checked', '');
+                }
+            }, 10)
         });
     });
     
