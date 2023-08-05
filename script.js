@@ -28,6 +28,8 @@ const Board = (() => { //Respopnsible for drawing and tracking
 
 const Game = (() => {
     const btnRestart = document.querySelector('.controls-game #restart');
+    let btnActive = document.querySelector('input:checked');
+    let btnInactive = document.querySelector('input:not(:checked)');
     let lastLocation;
     let currentSign;
 
@@ -52,13 +54,25 @@ const Game = (() => {
     const restart = () => {
         Board.reset();
     }
+    const switchButtons = () => {
+        btnActive.removeAttribute('checked');
+        btnInactive.setAttribute('checked', '');
 
+        btnInactive.removeEventListener('click', switchButtons)
+        const tmp = btnActive;
+        btnActive = btnInactive;
+        btnInactive = tmp;
 
+        btnInactive.addEventListener('click', switchButtons);
+        
+        
+    }
+
+    //Change sign manually
+    btnInactive.addEventListener('click', switchButtons)
     //Get User Board Input + Game logic upon Event
     boardElements.forEach((e) => {
         e.addEventListener('click', () => {
-            let btnActive = document.querySelector('input:checked');
-            let btnInactive = document.querySelector('input:not(:checked)');
             if(!btnActive) {
                 alert('Please Select a Sign First!');
                 return;
@@ -67,16 +81,13 @@ const Game = (() => {
             currentSign = btnActive.dataset.choice;
 
             Board.update(e, lastLocation, currentSign); //Update board on each input event
-
             setTimeout(() => {
                 if(isOver()){
                     if(alert(`${currentSign} has Won!!!`));
                     restart();
                 }            
                 else{
-                    //Switch Sign
-                    btnActive.removeAttribute('checked');
-                    btnInactive.setAttribute('checked', '');
+                    switchButtons();
                 }
             }, 10)
         });

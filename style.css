@@ -51,7 +51,7 @@ a{
     background-color: transparent;
     color: var(--font-color-black);
 }
-:checked + label{
+input[checked] + label{
     background-color: darkred;
     border-color: darkred;
     color: var(--font-color-white);
