@@ -103,7 +103,7 @@ footer a{
     font-size: clamp(1.5rem, 3rem + 1vw, 5rem);
 }
 
-.controls > label{
+.controls > label, .content-container .btn{
     font-size: calc(1rem + .6vw);
     padding-inline: clamp(100px, 25vw, 150px);
     padding-block: 1em;

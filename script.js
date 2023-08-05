@@ -27,7 +27,7 @@ const Board = (() => { //Respopnsible for drawing and tracking
 })();
 
 const Game = (() => {
-    const controlButtons = document.querySelectorAll('.controls button');
+    const btnRestart = document.querySelector('.controls-game #restart');
     let lastLocation;
     let currentSign;
 
@@ -53,19 +53,12 @@ const Game = (() => {
         Board.reset();
     }
 
-    //Get User Choice
-    controlButtons.forEach(b => {
-        b.addEventListener('click', () => {
-            const prevSelection = document.querySelector('selected');
-            if(prevSelection) prevSelection.classList.toggle('selected')
-            b.classList.toggle('selected')
-        });
-    })
 
     //Get User Board Input + Game logic upon Event
     boardElements.forEach((e) => {
         e.addEventListener('click', () => {
-            const btnActive = document.querySelector(':checked + label');
+            let btnActive = document.querySelector('input:checked');
+            let btnInactive = document.querySelector('input:not(:checked)');
             if(!btnActive) {
                 alert('Please Select a Sign First!');
                 return;
@@ -81,6 +74,10 @@ const Game = (() => {
             }
         });
     });
+    
+    //Control Input
+    btnRestart.addEventListener('click', restart)
+    
 
     return { getLastLocation, getCurrentSign, restart };
 })();
