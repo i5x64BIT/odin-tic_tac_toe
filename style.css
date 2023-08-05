@@ -13,20 +13,21 @@ html, body, h1, div, p{
     margin: 0;
     padding: 0;
 }
-script, body > *:not(.page-container){
+script, body > *:not(.page-container), input[type='radio']{
     display: none;
 }
 a{
     text-decoration: none;
     color: var(--font-color-black);
 }
-button{
+
+
+/* Utility */
+.btn{
     appearance: none;
     font-size: 1rem;
     cursor: pointer;
 }
-
-/* Utility */
 .btn-secondary{
     border: 1px solid var(--color-secondary);
     border-radius: 5px;
@@ -50,9 +51,10 @@ button{
     background-color: transparent;
     color: var(--font-color-black);
 }
-.selected{
+:checked + label{
     background-color: darkred;
     border-color: darkred;
+    color: var(--font-color-white);
 }
 
 /* Layout */
@@ -83,7 +85,7 @@ footer a{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 .board{
     min-width: 30%;
@@ -100,10 +102,12 @@ footer a{
     align-items: center;
     font-size: clamp(1.5rem, 3rem + 1vw, 5rem);
 }
-.controls > button{
+
+.controls > label{
     font-size: calc(1rem + .6vw);
     padding-inline: clamp(100px, 25vw, 150px);
     padding-block: 1em;
+    margin-inline: 5px;
 }
 
 
